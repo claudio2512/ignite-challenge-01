@@ -11,36 +11,49 @@ interface Task {
 }
 
 export function TaskList() {
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
-  function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+  //=============================================
+  // Cria uma nova task com um id random, 
+  // não permite criar caso o título seja vazio.
+  //=============================================
+  function handleCreateNewTask() {    
+    
     if (!newTaskTitle) return;
     
     const taskNew = {
       id : Math.random(),
       title: newTaskTitle,
       isComplete: false,
-    }
-    setTasks(oldState => [...oldState, taskNew]);
-    setNewTaskTitle('');
-
+    }    
+    setTasks(oldState => [...oldState, taskNew]); //acrescenta uma nova tarefa a lista de tarefas    
+    setNewTaskTitle(''); //Limpa o titulo
   }
 
+  
+  //=============================================
+  //Alterna entre `true` ou `false` o campo 
+  //`isComplete` de uma task com dado ID
+  //=============================================
   function handleToggleTaskCompletion(id: number) {
-    // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+    
     const newTasks = tasks.map(task => task.id === id ? 
-      {...task,isComplete: !task.isComplete} : task);    
+      { ...task, isComplete: !task.isComplete } : task);  //Operador ternário  
     setTasks(newTasks);
   }
 
-  function handleRemoveTask(id: number) {
-    // Remova uma task da listagem pelo ID
+   
+  //=============================================
+  //Remove uma task da listagem pelo ID
+  //=============================================  
+  function handleRemoveTask(id: number) {    
     const filtredTask = tasks.filter(task => task.id != id);
     setTasks(filtredTask);
   }
 
+  
   return (
     <section className="task-list container">
       <header>
